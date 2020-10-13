@@ -1,0 +1,16 @@
+compiler
+interpreter
+java
+javascript
+python
+cobol
+fortran
+php
+cpp
+weakest precondition
+ambiguity
+parser tree
+static scoping
+dynamic scoping
+grammar
+syntax
