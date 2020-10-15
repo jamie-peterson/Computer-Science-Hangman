@@ -33,7 +33,10 @@ gameMenu = "
 "
 
 wordbank = File.read("wordbank.txt").split("\n")
-secret_word = wordbank[Random.rand(wordbank.size)]
+hintBank = File.read("hints.txt").split("\n")
+fileIndex = Random.rand(wordbank.size)
+secret_word = wordbank[fileIndex]
+hint = hintBank[fileIndex]
 # secret_word = wordbank[9]
 
 hangman_art = ["
@@ -107,14 +110,20 @@ hangman_art = ["
     incorrect = 0
     guesses = "";
     previousGuess = true
-
+    hintflag = false
     while playing
         
         system "clear"
+       
+
         puts gameMenu
         puts hangman_art[incorrect]
+        
         if guesses != ""
             print "Previous guesses: ", guesses, "\n"
+        end
+        if hintflag
+            print "Hint: ", hint, "\n"
         end
         puts display
         if previousGuess
@@ -122,7 +131,7 @@ hangman_art = ["
         else
             puts "Letter has already been entered, please enter a different letter."
         end
-    
+       
         flag = true
         guess = ""
         while flag
@@ -134,7 +143,7 @@ hangman_art = ["
             end
         end
         if guess.matches?(/1/)
-            puts "hint"
+            hintflag = true
         elsif guess.matches?(/2/)
             puts "Guess the entire word: "
             word = gets.not_nil!
@@ -152,40 +161,47 @@ hangman_art = ["
         elsif guess.matches?(/0/)
             startMenu()
         end
-            
-        if !guesses.includes?(guess)
-            guesses += guess
-            previousGuess = true
-            if key.index(guess) == nil
-                incorrect += 1
-                if incorrect == 6
-                    playing = false
-                    system "clear"
-                    puts hangman_art[incorrect]
-                    puts display
-                    print "Game Over... The word was ", secret_word, "\n"
-                    startMenu()
+         
+        char = guess.chars
+        alpha = ('a'..'z')
 
-                end
-            else
-                j = 0
-                while j < key.size
-                    if key[j] == guess
-                        display[j] = guess
+        if (alpha.includes? char[0])
+            if !guesses.includes?(guess) 
+                guesses += guess
+                previousGuess = true
+                if key.index(guess) == nil
+                    incorrect += 1
+                    if incorrect == 6
+                        playing = false
+                        system "clear"
+                        puts hangman_art[incorrect]
+                        puts display
+                        print "Game Over... The word was ", secret_word, "\n"
+                        startMenu()
+
                     end
-                    j += 1
+                else
+                    j = 0
+                    while j < key.size
+                        if key[j] == guess
+                            display[j] = guess
+                        end
+                        j += 1
+                    end
+                    if key == display
+                        playing = false
+                        system "clear"
+                        puts hangman_art[incorrect]
+                        puts display
+                        puts "Winner!"
+                        startMenu()
+                    end
                 end
-                if key == display
-                    playing = false
-                    system "clear"
-                    puts hangman_art[incorrect]
-                    puts display
-                    puts "Winner!"
-                    startMenu()
-                end
+            else 
+                previousGuess = false 
             end
         else 
-            previousGuess = false
+            previousGuess = true
         end
     end
 end
