@@ -7,7 +7,7 @@ def startMenu()
 
     ╔══════════════════════════════════╗
     ║            Welcome to            ║
-    ║      Compuer Science Hangman!    ║
+    ║      Computer Science Hangman!   ║
     ║     Press 1 to start a new game  ║
     ║     Press 0 to quit              ║
     ╚══════════════════════════════════╝
@@ -133,7 +133,26 @@ hangman_art = ["
             else flag = false 
             end
         end
-        # if guess.mathches(/1/)
+        if guess.matches?(/1/)
+            puts "hint"
+        elsif guess.matches?(/2/)
+            puts "Guess the entire word: "
+            word = gets.not_nil!
+            # if word.matches?(/secret_word/)
+            if word == secret_word
+                system "clear"
+                puts "Correct! Great job!"
+                startMenu()
+            else
+                system "clear"
+                puts "Incorrect... :( Better luck next time!"
+                print "The word was ", secret_word, "\n"
+                startMenu()
+            end
+        elsif guess.matches?(/0/)
+            startMenu()
+        end
+            
         if !guesses.includes?(guess)
             guesses += guess
             previousGuess = true
