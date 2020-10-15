@@ -6,11 +6,9 @@ python
 cobol
 fortran
 php
-cpp
-weakest precondition
-ambiguity
-parser tree
-static scoping
-dynamic scoping
-grammar
+byte
+bit
+operating system
 syntax
+program
+processor

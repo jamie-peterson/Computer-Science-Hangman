@@ -1,0 +1,14 @@
+Computer software that translates source code written in a high-level language (e.g., C++) into a set of machine-language.
+A computer program that directly executes instructions written in a programming or scripting language, without requiring them previously to have been compiled into a machine language program.
+A cross-platform object-oriented programming language that was released by Sun Microsystems in the year 1995.
+A scripting or programming language that allows you to implement complex features on web pages.
+An interpreted, high-level and general-purpose programming language.
+A compiled English-like computer programming language designed for business use. It is imperative, procedural and, object-oriented.
+A general-purpose, compiled imperative programming language that is especially suited to numeric computation and scientific computing.
+Hypertext Preprocessor.
+A group of binary digits or bits (usually eight) operated on as a unit.
+A binary digit, the smallest increment of data on a computer.
+The software that supports a computer's basic functions, such as scheduling tasks, executing applications, and controlling peripherals.
+Set of rules that defines the combinations of symbols that are considered to be correctly structured statements or expressions in that language.
+A collection of instructions that can be executed by a computer to perform a specific task.
+Handles all the basic system instructions, such as processing mouse and keyboard input and running applications.
