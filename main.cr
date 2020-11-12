@@ -1,6 +1,14 @@
 
-
+checkHiScores
 startMenu
+
+def checkHiScores()
+    if File.exists?("hiscores.txt")
+        # call sort for hiscores
+        return;
+    else File.write("hiscores.txt", "")
+    end
+end
 
 def startMenu()
     fanciness = "
@@ -22,6 +30,11 @@ def startMenu()
     end
 end
 
+def getHiScoreData(word, name, score)
+    data = word + " " + name + " " + score
+    File.write("hiscores.txt", data)
+end
+
 def game() 
 
 gameMenu = "
@@ -32,8 +45,8 @@ gameMenu = "
     ╚══════════════════════════╝
 "
 
-wordbank = File.read("wordbank.txt").split("\n")
-hintBank = File.read("hints.txt").split("\n")
+wordbank = File.read_lines("wordbank.txt")
+hintBank = File.read_lines("hints.txt")
 fileIndex = Random.rand(wordbank.size)
 secret_word = wordbank[fileIndex]
 hint = hintBank[fileIndex]
@@ -104,6 +117,7 @@ hangman_art = ["
         end
         
         i+=1
+
     end
 
     playing = true
@@ -114,7 +128,6 @@ hangman_art = ["
     while playing
         
         system "clear"
-       
 
         puts gameMenu
         puts hangman_art[incorrect]
