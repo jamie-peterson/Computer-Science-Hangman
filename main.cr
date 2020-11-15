@@ -22,8 +22,33 @@ def startMenu()
     end
 end
 
-def game() 
+def specifyWordbank()
+    optionMenu = "
+    ╔═══════════════════════════╗
+    ║      Wordbank options     ║
+    ║   Press 1 to use default  ║
+    ║   Press 2 to specify file ║
+    ╚═══════════════════════════╝
+"
+system "clear"
+puts optionMenu
+option = gets.not_nil!
+if option.matches?(/1/)
+    wordbank_file = "wordbank.txt"
+    hint_file = "hints.txt"
+elsif option.matches?(/2/)
+    puts "Please enter wordbank filepath:"
+    wordbank_file = gets.not_nil!
+    puts "Please enter hints filepath:"
+    hint_file = gets.not_nil!
+end
+{wordbank_file, hint_file}
+end
 
+def game() 
+filepaths = specifyWordbank()
+wordbank_file = filepaths[0].not_nil!
+hint_file = filepaths[1].not_nil!
 gameMenu = "
     ╔══════════════════════════╗
     ║   Press 1 get hint       ║
@@ -32,12 +57,11 @@ gameMenu = "
     ╚══════════════════════════╝
 "
 
-wordbank = File.read("wordbank.txt").split("\n")
-hintBank = File.read("hints.txt").split("\n")
+wordbank = File.read(wordbank_file).split("\n")
+hintBank = File.read(hint_file).split("\n")
 fileIndex = Random.rand(wordbank.size)
 secret_word = wordbank[fileIndex]
 hint = hintBank[fileIndex]
-# secret_word = wordbank[9]
 
 hangman_art = ["
  +---+
