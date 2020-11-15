@@ -45,6 +45,14 @@ end
 {wordbank_file, hint_file}
 end
 
+def print_display(word)
+    word.each do |letter|
+        print letter
+        print ' '
+    end
+    print '\n'
+end
+
 def game() 
 filepaths = specifyWordbank()
 wordbank_file = filepaths[0].not_nil!
@@ -149,7 +157,7 @@ hangman_art = ["
         if hintflag
             print "Hint: ", hint, "\n"
         end
-        puts display
+        print_display(display)
         if previousGuess
             puts "Please enter a letter: "
         else
@@ -199,7 +207,7 @@ hangman_art = ["
                         playing = false
                         system "clear"
                         puts hangman_art[incorrect]
-                        puts display
+                        print_display(display)
                         print "Game Over... The word was ", secret_word, "\n"
                         startMenu()
 
@@ -216,7 +224,7 @@ hangman_art = ["
                         playing = false
                         system "clear"
                         puts hangman_art[incorrect]
-                        puts display
+                        print_display(display)
                         puts "Winner!"
                         startMenu()
                     end
