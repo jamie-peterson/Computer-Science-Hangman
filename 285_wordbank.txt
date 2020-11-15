@@ -1,0 +1,7 @@
+agile
+scrum
+sprint
+scrum master
+stand-up
+product owner
+backlog

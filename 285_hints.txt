@@ -1,0 +1,7 @@
+Software development methodologies centered round the idea of iterative development, where requirements and solutions evolve through collaboration between self-organizing cross-functional teams
+A framework that helps teams work together by encouraging them to learn through experiences, self-organize while working on a problem, and reflect on their wins and losses to continuously improve
+A set period of time during which specific work has to be completed and made ready for review
+Team facilitator and manager of the Scrum framework
+Daily meeting to discuss progress and brainstorm solutions to challenges
+Person representing the business or user community and is a liaison between the development team and customers
+A list of set tasks that must be completed before the product is released
