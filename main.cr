@@ -1,8 +1,32 @@
-
+require "colorize"
 
 startMenu
 
 def startMenu()
+hangman1 = "
+ _    _                       __  __".colorize(:red)
+hangman2 = "           
+| |  | |                     |  \\/  |".colorize(Colorize::ColorRGB.new(255, 69, 0))  
+
+hangman3 ="           
+| |__| |  __ _  _ __    __ _ | \\  / |  __ _  _ __".colorize(:yellow)
+
+hangman4 ="           
+|  __  | / _` || '_ \\  / _` || |\\/| | / _` || '_ \\ ".colorize(:green)
+
+hangman5 ="           
+| |  | || (_| || | | || (_| || |  | || (_| || | | |".colorize(:blue)
+
+hangman6 ="           
+|_|  |_| \\__,_||_| |_| \\__, ||_|  |_| \\__,_||_| |_|".colorize(:cyan)
+
+hangman7 ="           
+                        __/ |".colorize(Colorize::ColorRGB.new(75,0,130))
+hangman8 ="           
+                       |___/".colorize(Colorize::ColorRGB.new(238,130,238))       
+                 
+    print hangman1,hangman2,hangman3,hangman4,hangman5,hangman6,hangman7,hangman8,
+    
     fanciness = "
 
     ╔══════════════════════════════════╗
@@ -12,8 +36,8 @@ def startMenu()
     ║     Press 0 to quit              ║
     ╚══════════════════════════════════╝
     
-    "
-    puts fanciness
+    ".colorize.fore(:yellow)
+
     input = gets.not_nil!
     if input.matches?(/1/)
         game
@@ -29,7 +53,7 @@ def specifyWordbank()
     ║   Press 1 to use default  ║
     ║   Press 2 to specify file ║
     ╚═══════════════════════════╝
-"
+".colorize.fore(:yellow)
 system "clear"
 puts optionMenu
 option = gets.not_nil!
@@ -47,10 +71,10 @@ end
 
 def print_display(word)
     word.each do |letter|
-        print letter
-        print ' '
+        print letter.colorize.fore(:yellow)
+        print ' '.colorize
     end
-    print '\n'
+    print '\n'.colorize 
 end
 
 def game() 
@@ -63,7 +87,7 @@ gameMenu = "
     ║   Press 2 to guess word  ║
     ║   Press 0 to end game    ║
     ╚══════════════════════════╝
-"
+".colorize.fore(:yellow)
 
 wordbank = File.read(wordbank_file).split("\n")
 hintBank = File.read(hint_file).split("\n")
@@ -79,49 +103,49 @@ hangman_art = ["
      |
      |
 =========
-", "
+".colorize.fore(:yellow), "
  +---+
  |   |
  O   |
      |
      |
      |
-=========", "
+=========".colorize.fore(:yellow), "
  +---+
  |   |
  O   |
  |   |
      |
      |
-=========", "
+=========".colorize.fore(:yellow) , "
  +---+
  |   |
  O   |
 /|   |
      |
      |
-=========", "
+=========".colorize.fore(:yellow) , "
  +---+
  |   |
  O   |
 /|\\  |
      |
      |
-=========", "
+=========".colorize.fore(:yellow) , "
  +---+
  |   |
  O   |
 /|\\  |
 /    |
      |
-=========", "
+=========".colorize.fore(:yellow) , "
  +---+
  |   |
  O   |
 /|\\  |
 / \\  |
      |
-========="]
+=========".colorize.fore(:yellow) ]
 
 
     key = secret_word.split(//)
@@ -152,16 +176,18 @@ hangman_art = ["
         puts hangman_art[incorrect]
         
         if guesses != ""
-            print "Previous guesses: ", guesses, "\n"
+            print "Previous guesses: ", guesses.colorize.fore(:yellow)
+            print "\n"
         end
         if hintflag
-            print "Hint: ", hint, "\n"
+            print "Hint: ", hint.colorize.fore(:yellow) 
+            print "\n"
         end
         print_display(display)
         if previousGuess
             puts "Please enter a letter: "
         else
-            puts "Letter has already been entered, please enter a different letter."
+            puts "Letter has already been entered, please enter a different letter.".colorize.fore(:yellow)
         end
        
         flag = true
@@ -169,7 +195,7 @@ hangman_art = ["
         while flag
             guess = gets.not_nil!        
             if guess.bytesize > 1
-                puts "Please enter a single letter: "
+                puts "Please enter a single letter: ".colorize.fore(:yellow)
                 flag = true
             else flag = false 
             end
@@ -177,17 +203,18 @@ hangman_art = ["
         if guess.matches?(/1/)
             hintflag = true
         elsif guess.matches?(/2/)
-            puts "Guess the entire word: "
+            puts "Guess the entire word: ".colorize.fore(:yellow)
             word = gets.not_nil!
             # if word.matches?(/secret_word/)
             if word == secret_word
                 system "clear"
-                puts "Correct! Great job!"
+                puts "Correct! Great job!".colorize.fore(:yellow)
                 startMenu()
             else
                 system "clear"
-                puts "Incorrect... :( Better luck next time!"
-                print "The word was ", secret_word, "\n"
+                puts "Incorrect... :( Better luck next time!".colorize.fore(:yellow)
+                print "The word was ", secret_word.colorize.fore(:yellow)
+                print "\n"
                 startMenu()
             end
         elsif guess.matches?(/0/)
@@ -208,7 +235,8 @@ hangman_art = ["
                         system "clear"
                         puts hangman_art[incorrect]
                         print_display(display)
-                        print "Game Over... The word was ", secret_word, "\n"
+                        print "Game Over... The word was ", secret_word.colorize.fore(:yellow)
+                        print "\n"
                         startMenu()
 
                     end
@@ -225,7 +253,7 @@ hangman_art = ["
                         system "clear"
                         puts hangman_art[incorrect]
                         print_display(display)
-                        puts "Winner!"
+                        puts "Winner!".colorize.fore(:yellow)
                         startMenu()
                     end
                 end
