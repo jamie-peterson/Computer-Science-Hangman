@@ -1,6 +1,14 @@
 require "colorize"
-
+checkHiScores
 startMenu
+
+def checkHiScores()
+    if File.exists?("hiscores.txt")
+        #call sort for hiscores
+        return;
+    else File.write("hiscores.txt", "")
+    end
+end
 
 def startMenu()
 hangman1 = "
@@ -76,7 +84,10 @@ def print_display(word)
     end
     print '\n'.colorize 
 end
-
+def getHiScoreData(word,name,score)
+    data = word + " " + name + score
+    File.write("hiscores.txt",data)
+end
 def game() 
 filepaths = specifyWordbank()
 wordbank_file = filepaths[0].not_nil!
@@ -89,8 +100,8 @@ gameMenu = "
     ╚══════════════════════════╝
 ".colorize.fore(:yellow)
 
-wordbank = File.read(wordbank_file).split("\n")
-hintBank = File.read(hint_file).split("\n")
+wordbank = File.read_lines(wordbank_file)
+hintBank = File.read_lines(hint_file)
 fileIndex = Random.rand(wordbank.size)
 secret_word = wordbank[fileIndex]
 hint = hintBank[fileIndex]
