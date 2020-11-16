@@ -84,8 +84,11 @@ def print_display(word)
     end
     print '\n'.colorize 
 end
-def getHiScoreData(word,name,score)
-    data = word + " " + name + score
+
+def getHiScoreData(word,guesses)
+    puts "Enter name for High Scores: "
+    name = gets.not_nil!
+    data = word + ", " + name + ", "+ guesses.to_s
     File.write("hiscores.txt",data)
 end
 def game() 
@@ -220,6 +223,7 @@ hangman_art = ["
             if word == secret_word
                 system "clear"
                 puts "Correct! Great job!".colorize.fore(:yellow)
+                getHiScoreData(secret_word, guesses.size)
                 startMenu()
             else
                 system "clear"
@@ -265,6 +269,7 @@ hangman_art = ["
                         puts hangman_art[incorrect]
                         print_display(display)
                         puts "Winner!".colorize.fore(:yellow)
+                        getHiScoreData(secret_word, guesses.size)
                         startMenu()
                     end
                 end
