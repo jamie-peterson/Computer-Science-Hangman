@@ -30,8 +30,10 @@ def startMenu()
     end
 end
 
-def getHiScoreData(word, name, score)
-    data = word + " " + name + " " + score
+def getHiScoreData(word, guesses)
+    puts "Enter name for High Scores.."
+    name = gets.not_nil!
+    data = word + "," + name + "," + guesses.to_s
     File.write("hiscores.txt", data)
 end
 
@@ -164,6 +166,7 @@ hangman_art = ["
             if word == secret_word
                 system "clear"
                 puts "Correct! Great job!"
+                getHiScoreData(secret_word, guesses.size)
                 startMenu()
             else
                 system "clear"
@@ -207,6 +210,7 @@ hangman_art = ["
                         puts hangman_art[incorrect]
                         puts display
                         puts "Winner!"
+                        getHiScoreData(secret_word, guesses.size)
                         startMenu()
                     end
                 end
