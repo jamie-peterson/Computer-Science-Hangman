@@ -1,8 +1,4 @@
 processor, darryl, 6
 compiler, darryl, 11
 operating system, darryl, 7
-processor, darryl, 8
-java, darryl, 5
-operating system, darryl, 15
-cobol, darryl, 12
-php, darryl, 5
+byte, Lauren, 9

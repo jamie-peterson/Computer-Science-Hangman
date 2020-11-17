@@ -77,13 +77,13 @@ hangman8 ="
     
     fanciness = "
 
-    ╔═══════════════════════════════════╗
-    ║            Welcome to             ║
-    ║     Computer Science Hangman!     ║
-    ║    Press 1 to start a new game    ║
-    ║   Press 2 to display High Scores  ║
-    ║         Press 0 to quit           ║
-    ╚═══════════════════════════════════╝
+      ╔═══════════════════════════════════╗
+      ║            Welcome to             ║
+      ║     Computer Science Hangman!     ║
+      ║    Press 1 to start a new game    ║
+      ║   Press 2 to display High Scores  ║
+      ║         Press 0 to quit           ║
+      ╚═══════════════════════════════════╝
     
     ".colorize.fore(:yellow)
 
@@ -226,12 +226,19 @@ hangman_art = ["
     guesses = "";
     previousGuess = true
     hintflag = false
+    hintflagscore = false
+    hint
     score = 0
+
+    
     while playing
         
         system "clear"
-       
+        if hintflagscore
+            score = score + 1
+            hintflagscore = false
 
+        end
         puts gameMenu
         puts "Score: #{score}"
         puts hangman_art[incorrect]
@@ -240,11 +247,12 @@ hangman_art = ["
             print "Previous guesses: ", guesses.colorize.fore(:yellow)
             print "\n"
         end
+        
         if hintflag
-            score += 1
             print "Hint: ", hint.colorize.fore(:yellow) 
             print "\n"
         end
+        
         print_display(display)
         if previousGuess
             puts "\nPlease enter a letter: "
@@ -264,6 +272,7 @@ hangman_art = ["
         end
         if guess.matches?(/1/)
             hintflag = true
+            hintflagscore = true
         elsif guess.matches?(/2/)
             puts "Guess the entire word: ".colorize.fore(:yellow)
             word = gets.not_nil!
