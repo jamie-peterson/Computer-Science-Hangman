@@ -1,13 +1,53 @@
 require "colorize"
+
 checkHiScores
 startMenu
 
 def checkHiScores()
-    if File.exists?("hiscores.txt")
-        #call sort for hiscores
-        return;
-    else File.write("hiscores.txt", "")
+    if (!File.exists?("hiscores.txt"))
+        File.new("hiscores.txt", "w")
+    else return;
     end
+end
+
+def printHiScores()
+    hiscores = File.read_lines("hiscores.txt")
+    scoreArray = [] of Array(String)
+    hiscores.each do |el|
+        split = el.split(/, /)
+        scoreArray.push(split)
+    end
+    sorted = scoreArray.sort_by! { |array| array[-1].to_i }
+
+    puts " _   _ _       _       _____                         ".colorize(:cyan)
+    puts "| | | (_)     | |     /  ___|                        ".colorize(:cyan)
+    puts "| |_| |_  __ _| |__   \\ `--.  ___ ___  _ __ ___  ___ ".colorize(:cyan)
+    puts "|  _  | |/ _` | '_ \\   `--. \\/ __/ _ \\| '__/ _ \\/ __|".colorize(:cyan)
+    puts "| | | | | (_| | | | | /\\__/ / (_| (_) | | |  __/\\__ \\".colorize(:cyan)
+    puts "\\_| |_/_|\\__, |_| |_| \\____/ \\___\\___/|_|  \\___||___/".colorize(:cyan)
+    puts "          __/ |                                      ".colorize(:cyan)
+    puts "         |___/                                       ".colorize(:cyan)
+
+    puts "\v"+"#{"Word".ljust(25).colorize.fore(:yellow)}"+"#{"Player".ljust(25).colorize.fore(:yellow)}" + "#{"Score".ljust(25).colorize.fore(:yellow)}"+"\v"
+
+    sorted.each do |entry|
+            puts "#{entry[0].ljust(25).colorize(Colorize::ColorRGB.new(238,130,238))}"+"#{entry[1].ljust(25).colorize(Colorize::ColorRGB.new(238,130,238))}"+"#{entry[2].colorize(Colorize::ColorRGB.new(238,130,238))}"
+        
+    end
+
+    puts "
+          ╔═══════════════════════════╗
+          ║          Options          ║
+          ║   Press 1 for Main Menu   ║
+          ║      Press 0 to Quit      ║
+          ╚═══════════════════════════╝".colorize.fore(:yellow)
+    input = gets.not_nil!
+    if input.matches?(/1/)
+        startMenu()
+    elsif input.matches?(/0/)
+        exit
+    end
+    
 end
 
 def startMenu()
@@ -37,18 +77,21 @@ hangman8 ="
     
     fanciness = "
 
-    ╔══════════════════════════════════╗
-    ║            Welcome to            ║
-    ║      Computer Science Hangman!   ║
-    ║     Press 1 to start a new game  ║
-    ║     Press 0 to quit              ║
-    ╚══════════════════════════════════╝
+    ╔═══════════════════════════════════╗
+    ║            Welcome to             ║
+    ║     Computer Science Hangman!     ║
+    ║    Press 1 to start a new game    ║
+    ║   Press 2 to display High Scores  ║
+    ║         Press 0 to quit           ║
+    ╚═══════════════════════════════════╝
     
     ".colorize.fore(:yellow)
 
     input = gets.not_nil!
     if input.matches?(/1/)
         game
+    elsif input.matches?(/2/)
+        printHiScores
     elsif input.matches?(/0/)
         exit
     end
@@ -85,11 +128,12 @@ def print_display(word)
     print '\n'.colorize 
 end
 
-def getHiScoreData(word,guesses)
-    puts "Enter name for High Scores: "
+def getHiScoreData(word,score)
+    puts "Your score: #{score}".colorize.fore(:yellow)
+    puts "Enter name for High Scores: ".colorize.fore(:yellow)
     name = gets.not_nil!
-    data = word + ", " + name + ", "+ guesses.to_s
-    File.write("hiscores.txt",data)
+    data = word + ", " + name + ", "+ score.to_s+ "\n"
+    File.write("hiscores.txt", data, mode: "a")
 end
 def game() 
 filepaths = specifyWordbank()
@@ -101,6 +145,7 @@ gameMenu = "
     ║   Press 2 to guess word  ║
     ║   Press 0 to end game    ║
     ╚══════════════════════════╝
+    *Using a hint will add +1 to your score.
 ".colorize.fore(:yellow)
 
 wordbank = File.read_lines(wordbank_file)
@@ -117,49 +162,49 @@ hangman_art = ["
      |
      |
 =========
-".colorize.fore(:yellow), "
+".colorize.fore(:green), "
  +---+
  |   |
  O   |
      |
      |
      |
-=========".colorize.fore(:yellow), "
+=========".colorize.fore(:green), "
  +---+
  |   |
  O   |
  |   |
      |
      |
-=========".colorize.fore(:yellow) , "
+=========".colorize.fore(:green) , "
  +---+
  |   |
  O   |
 /|   |
      |
      |
-=========".colorize.fore(:yellow) , "
+=========".colorize.fore(:green) , "
  +---+
  |   |
  O   |
 /|\\  |
      |
      |
-=========".colorize.fore(:yellow) , "
+=========".colorize.fore(:green) , "
  +---+
  |   |
  O   |
 /|\\  |
 /    |
      |
-=========".colorize.fore(:yellow) , "
- +---+
+=========".colorize.fore(:green) , "
+ +---+          
  |   |
  O   |
 /|\\  |
 / \\  |
      |
-=========".colorize.fore(:yellow) ]
+=========".colorize.fore(:green) ]
 
 
     key = secret_word.split(//)
@@ -181,12 +226,14 @@ hangman_art = ["
     guesses = "";
     previousGuess = true
     hintflag = false
+    score = 0
     while playing
         
         system "clear"
        
 
         puts gameMenu
+        puts "Score: #{score}"
         puts hangman_art[incorrect]
         
         if guesses != ""
@@ -194,12 +241,13 @@ hangman_art = ["
             print "\n"
         end
         if hintflag
+            score += 1
             print "Hint: ", hint.colorize.fore(:yellow) 
             print "\n"
         end
         print_display(display)
         if previousGuess
-            puts "Please enter a letter: "
+            puts "\nPlease enter a letter: "
         else
             puts "Letter has already been entered, please enter a different letter.".colorize.fore(:yellow)
         end
@@ -223,7 +271,7 @@ hangman_art = ["
             if word == secret_word
                 system "clear"
                 puts "Correct! Great job!".colorize.fore(:yellow)
-                getHiScoreData(secret_word, guesses.size)
+                getHiScoreData(secret_word, score)
                 startMenu()
             else
                 system "clear"
@@ -242,6 +290,7 @@ hangman_art = ["
         if (alpha.includes? char[0])
             if !guesses.includes?(guess) 
                 guesses += guess
+                score += 1
                 previousGuess = true
                 if key.index(guess) == nil
                     incorrect += 1
@@ -269,7 +318,7 @@ hangman_art = ["
                         puts hangman_art[incorrect]
                         print_display(display)
                         puts "Winner!".colorize.fore(:yellow)
-                        getHiScoreData(secret_word, guesses.size)
+                        getHiScoreData(secret_word, score)
                         startMenu()
                     end
                 end
