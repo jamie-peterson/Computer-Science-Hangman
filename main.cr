@@ -155,56 +155,56 @@ secret_word = wordbank[fileIndex]
 hint = hintBank[fileIndex]
 
 hangman_art = ["
- +---+
- |   |
-     |
-     |
-     |
-     |
-=========
+    +---++
+    |   ||
+        ||
+        ||
+        ||
+        ||
+==================
 ".colorize.fore(:green), "
- +---+
- |   |
- O   |
-     |
-     |
-     |
-=========".colorize.fore(:green), "
- +---+
- |   |
- O   |
- |   |
-     |
-     |
-=========".colorize.fore(:green) , "
- +---+
- |   |
- O   |
-/|   |
-     |
-     |
-=========".colorize.fore(:green) , "
- +---+
- |   |
- O   |
-/|\\  |
-     |
-     |
-=========".colorize.fore(:green) , "
- +---+
- |   |
- O   |
-/|\\  |
-/    |
-     |
-=========".colorize.fore(:green) , "
- +---+          
- |   |
- O   |
-/|\\  |
-/ \\  |
-     |
-=========".colorize.fore(:green) ]
+    +---++
+    |   ||
+    0   ||
+        ||
+        ||
+        ||
+==================".colorize.fore(:green), "
+    +---++
+    |   ||
+    0   ||
+    |   ||
+        ||
+        ||
+==================".colorize.fore(:green) , "
+    +---++
+    |   ||
+    0   ||
+   /|   ||
+        ||
+        ||
+==================".colorize.fore(:green) , "
+    +---++
+    |   ||
+    0   ||
+   /|\\  ||
+        ||
+        ||
+==================".colorize.fore(:green) , "
+    +---++
+    |   ||
+    0   ||
+   /|\\  ||
+   /    ||
+        ||
+==================".colorize.fore(:green) , "
+    +---++
+    |   ||
+    0   ||
+   /|\\  ||
+   / \\  ||
+        ||
+==================".colorize.fore(:green) ]
 
 
     key = secret_word.split(//)
